@@ -31,8 +31,8 @@ export const CallToAction = (props: {
     <p
       style={{
         display: "inline-block",
-        background: secondary ? "#FFFFFF" : "#292929",
-        border: secondary ? "1px solid #d1d5db" : "",
+        background: secondary ? "#161616" : "#6366f1",
+        border: secondary ? "1px solid rgba(255,255,255,0.10)" : "",
         color: "#ffffff",
         fontFamily: "Roboto, Helvetica, sans-serif",
         fontSize: "0.875rem",
@@ -52,7 +52,7 @@ export const CallToAction = (props: {
       {/* @ts-expect-error shared props between href and button */}
       <El
         style={{
-          color: secondary ? "#292929" : "#FFFFFF",
+          color: secondary ? "#e0e0e0" : "#ffffff",
           textDecoration: "none",
           display: "flex",
           alignItems: "center",

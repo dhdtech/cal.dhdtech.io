@@ -51,7 +51,7 @@ export function ManageLink(props: { calEvent: CalendarEvent; attendee: Person })
           fontWeight: 500,
           lineHeight: "0px",
           textAlign: "left",
-          color: "#101010",
+          color: "#e0e0e0",
         }}>
         <p
           style={{
@@ -66,7 +66,7 @@ export function ManageLink(props: { calEvent: CalendarEvent; attendee: Person })
               <a
                 href={rescheduleLink}
                 style={{
-                  color: "#374151",
+                  color: "#9ca3af",
                   marginLeft: "5px",
                   marginRight: "5px",
                   textDecoration: "underline",
@@ -81,7 +81,7 @@ export function ManageLink(props: { calEvent: CalendarEvent; attendee: Person })
               <a
                 href={cancelLink}
                 style={{
-                  color: "#374151",
+                  color: "#9ca3af",
                   marginLeft: "5px",
                   textDecoration: "underline",
                 }}>
@@ -103,7 +103,7 @@ export function ManageLink(props: { calEvent: CalendarEvent; attendee: Person })
               <a
                 href={bookingLink}
                 style={{
-                  color: "#374151",
+                  color: "#9ca3af",
                   marginLeft: "5px",
                   textDecoration: "underline",
                 }}>

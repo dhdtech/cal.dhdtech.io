@@ -47,7 +47,7 @@ export const VerifyAccountEmail = (
             {props.language("happy_scheduling")}, <br />
             <a
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
-              style={{ color: "#3E3E3E" }}
+              style={{ color: "#828a97" }}
               target="_blank"
               rel="noreferrer">
               <>{props.language("the_calcom_team", { companyName: SENDER_NAME })}</>

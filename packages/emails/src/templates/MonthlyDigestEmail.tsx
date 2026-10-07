@@ -129,7 +129,7 @@ export const MonthlyDigestEmail = (
             style={{
               display: "flex",
               justifyContent: "space-between",
-              borderBottom: "1px solid #D1D5DB",
+              borderBottom: "1px solid rgba(255,255,255,0.10)",
               fontSize: "16px",
             }}>
             <p style={{ fontWeight: 500 }}>{props.language("most_popular_events")}</p>
@@ -142,7 +142,7 @@ export const MonthlyDigestEmail = (
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    borderBottom: `${idx === props.mostBookedEvents.length - 1 ? "" : "1px solid #D1D5DB"}`,
+                    borderBottom: `${idx === props.mostBookedEvents.length - 1 ? "" : "1px solid rgba(255,255,255,0.10)"}`,
                   }}>
                   <p style={{ fontWeight: "normal" }}>{ev.eventTypeName}</p>
                   <p style={{ fontWeight: "normal" }}>{ev.count}</p>
@@ -155,7 +155,7 @@ export const MonthlyDigestEmail = (
             style={{
               display: "flex",
               justifyContent: "space-between",
-              borderBottom: "1px solid #D1D5DB",
+              borderBottom: "1px solid rgba(255,255,255,0.10)",
             }}>
             <p style={{ fontWeight: 500 }}>{props.language("most_booked_members")}</p>
             <p style={{ fontWeight: 500 }}>{props.language("bookings")}</p>
@@ -168,7 +168,7 @@ export const MonthlyDigestEmail = (
                     display: "flex",
                     justifyContent: "space-between",
                     borderBottom: `${
-                      idx === props.membersWithMostBookings.length - 1 ? "" : "1px solid #D1D5DB"
+                      idx === props.membersWithMostBookings.length - 1 ? "" : "1px solid rgba(255,255,255,0.10)"
                     }`,
                   }}>
                   <p style={{ fontWeight: "normal" }}>{it.user.name}</p>
@@ -184,7 +184,7 @@ export const MonthlyDigestEmail = (
             {props.language("happy_scheduling")}, <br />
             <a
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
-              style={{ color: "#3E3E3E" }}
+              style={{ color: "#828a97" }}
               target="_blank"
               rel="noreferrer">
               <>{props.language("the_calcom_team", { companyName: SENDER_NAME })}</>

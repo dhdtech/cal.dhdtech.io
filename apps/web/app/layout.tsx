@@ -3,7 +3,6 @@ import { loadTranslations } from "@calcom/i18n/server";
 import { IconSprites } from "@calcom/ui/components/icon";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { dir } from "i18next";
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { cookies, headers } from "next/headers";
 import Script from "next/script";
@@ -14,13 +13,26 @@ import { AppRouterI18nProvider } from "./AppRouterI18nProvider";
 import { Providers } from "./providers";
 import { SpeculationRules } from "./SpeculationRules";
 
-const interFont = Inter({ subsets: ["latin"], variable: "--font-sans", preload: true, display: "swap" });
+const sansFont = localFont({
+  src: "../fonts/space-grotesk-vf.woff2",
+  variable: "--font-sans",
+  preload: true,
+  display: "swap",
+  weight: "300 700",
+});
 const calFont = localFont({
-  src: "../fonts/CalSans-SemiBold.woff2",
+  src: "../fonts/space-grotesk-vf.woff2",
   variable: "--font-cal",
   preload: true,
-  display: "block",
-  weight: "600",
+  display: "swap",
+  weight: "300 700",
+});
+const monoFont = localFont({
+  src: "../fonts/martian-mono-vf-latin.woff2",
+  variable: "--font-mono",
+  preload: true,
+  display: "swap",
+  weight: "100 800",
 });
 
 export const viewport = {
@@ -32,11 +44,11 @@ export const viewport = {
   themeColor: [
     {
       media: "(prefers-color-scheme: light)",
-      color: "#f9fafb",
+      color: "#0a0a0a",
     },
     {
       media: "(prefers-color-scheme: dark)",
-      color: "#1C1C1C",
+      color: "#0a0a0a",
     },
   ],
 };
@@ -116,8 +128,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head nonce={nonce}>
         <style>{`
           :root {
-            --font-sans: ${interFont.style.fontFamily.replace(/\'/g, "")}, system-ui;
+            --font-sans: ${sansFont.style.fontFamily.replace(/\'/g, "")}, system-ui;
             --font-cal: ${calFont.style.fontFamily.replace(/\'/g, "")};
+            --font-mono: ${monoFont.style.fontFamily.replace(/\'/g, "")}, ui-monospace, monospace;
           }
         `}</style>
         {process.env.NODE_ENV === "development" && (

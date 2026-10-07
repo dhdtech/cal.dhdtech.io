@@ -43,7 +43,7 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
                 fontWeight: 400,
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#494949",
+                color: "#828a97",
               }}>
               {t("error_message", { errorMessage: paymentInfo.reason }).toString()}
             </div>
@@ -60,7 +60,7 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
                 fontWeight: 400,
                 lineHeight: "24px",
                 textAlign: "center",
-                color: "#494949",
+                color: "#828a97",
               }}>
               Payment {paymentInfo.id}
             </div>

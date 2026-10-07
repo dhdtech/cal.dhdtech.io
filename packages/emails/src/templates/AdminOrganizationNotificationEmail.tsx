@@ -20,7 +20,7 @@ const dnsTable = (type: string, name: string, value: string, t: TFunction) => (
     style={{
       verticalAlign: "top",
       marginTop: "10px",
-      borderRadius: "6px",
+      borderRadius: 0,
       borderCollapse: "separate",
       border: "solid black 1px",
     }}

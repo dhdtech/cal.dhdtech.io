@@ -48,7 +48,7 @@ export const SlugReplacementEmail = (
         </table>
         <p
           style={{
-            borderTop: "solid 1px #E1E1E1",
+            borderTop: "solid 1px rgba(255,255,255,0.10)",
             fontSize: 1,
             margin: "35px auto",
             width: "100%",

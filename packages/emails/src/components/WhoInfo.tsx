@@ -10,11 +10,11 @@ export const PersonInfo = ({ name = "", email = "", role = "", phoneNumber = "" 
   const formattedPhoneNumber = !!phoneNumber ? `${phoneNumber} ` : "";
 
   return (
-    <div style={{ color: "#101010", fontWeight: 400, lineHeight: "24px" }}>
+    <div style={{ color: "#e0e0e0", fontWeight: 400, lineHeight: "24px" }}>
       {name} - {role} {formattedPhoneNumber}
       {displayEmail && (
-        <span style={{ color: "#4B5563" }}>
-          <a href={`mailto:${email}`} style={{ color: "#4B5563" }}>
+        <span style={{ color: "#9ca3af" }}>
+          <a href={`mailto:${email}`} style={{ color: "#9ca3af" }}>
             {email}
           </a>
         </span>

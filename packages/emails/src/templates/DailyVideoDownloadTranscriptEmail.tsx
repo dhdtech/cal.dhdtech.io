@@ -63,7 +63,7 @@ export const DailyVideoDownloadTranscriptEmail = (
           <div
             key={`transcript-${index}`}
             style={{
-              backgroundColor: "#F3F4F6",
+              backgroundColor: "#0a0a0a",
               padding: "32px",
               marginBottom: "40px",
             }}>

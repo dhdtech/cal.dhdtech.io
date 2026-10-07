@@ -106,7 +106,7 @@
         margin: 13px 0;
       }
       a {
-        color: #3b82f6;
+        color: #818cf8;
       }
 
       a img {
@@ -134,7 +134,7 @@
 
       h1 {
         margin-top: 0;
-        color: #333333;
+        color: #e0e0e0;
         font-size: 22px;
         font-weight: bold;
         text-align: left;
@@ -142,7 +142,7 @@
 
       h2 {
         margin-top: 0;
-        color: #333333;
+        color: #e0e0e0;
         font-size: 16px;
         font-weight: bold;
         text-align: left;
@@ -150,7 +150,7 @@
 
       h3 {
         margin-top: 0;
-        color: #333333;
+        color: #e0e0e0;
         font-size: 14px;
         font-weight: bold;
         text-align: left;
@@ -189,11 +189,11 @@
       /* Buttons ------------------------------ */
 
       .button {
-        background-color: #000;
-        border-top: 10px solid #000;
-        border-right: 18px solid #000;
-        border-bottom: 10px solid #000;
-        border-left: 18px solid #000;
+        background-color: #6366f1;
+        border-top: 10px solid #6366f1;
+        border-right: 18px solid #6366f1;
+        border-bottom: 10px solid #6366f1;
+        border-left: 18px solid #6366f1;
         display: inline-block;
         color: #fff !important;
         text-decoration: none;
@@ -216,7 +216,7 @@
       }
 
       .attributes_content {
-        background-color: #f4f4f7;
+        background-color: #161616;
         padding: 16px;
       }
 
@@ -236,7 +236,7 @@
 
       .related_item {
         padding: 10px 0;
-        color: #cbcccf;
+        color: #828a97;
         font-size: 15px;
         line-height: 18px;
       }
@@ -252,19 +252,19 @@
       }
 
       .related_heading {
-        border-top: 1px solid #cbcccf;
+        border-top: 1px solid rgba(255,255,255,0.10);
         text-align: center;
         padding: 25px 0 10px;
       }
       /* Data table ------------------------------ */
 
       body {
-        background-color: #f2f4f6;
-        color: #51545e;
+        background-color: #0a0a0a;
+        color: #e0e0e0;
       }
 
       p {
-        color: #51545e;
+        color: #e0e0e0;
       }
 
       .email-wrapper {
@@ -274,7 +274,7 @@
         -premailer-width: 100%;
         -premailer-cellpadding: 0;
         -premailer-cellspacing: 0;
-        background-color: #f2f4f6;
+        background-color: #0a0a0a;
       }
 
       .email-content {
@@ -299,9 +299,9 @@
       .email-masthead_name {
         font-size: 16px;
         font-weight: bold;
-        color: #a8aaaf;
+        color: #828a97;
         text-decoration: none;
-        text-shadow: 0 1px 0 white;
+        text-shadow: none;
       }
       /* Body ------------------------------ */
 
@@ -321,7 +321,7 @@
         -premailer-width: 570px;
         -premailer-cellpadding: 0;
         -premailer-cellspacing: 0;
-        background-color: #ffffff;
+        background-color: #101010;
       }
 
       .email-footer {
@@ -335,7 +335,7 @@
       }
 
       .email-footer p {
-        color: #a8aaaf;
+        color: #828a97;
       }
 
       .body-action {
@@ -351,7 +351,7 @@
       .body-sub {
         margin-top: 25px;
         padding-top: 25px;
-        border-top: 1px solid #eaeaec;
+        border-top: 1px solid rgba(255,255,255,0.10);
       }
 
       .content-cell {
@@ -374,7 +374,7 @@
         .email-wrapper,
         .email-masthead,
         .email-footer {
-          background-color: #333333 !important;
+          background-color: #0a0a0a !important;
           color: #fff !important;
         }
         p,
@@ -389,7 +389,7 @@
           color: #fff !important;
         }
         .attributes_content {
-          background-color: #222 !important;
+          background-color: #161616 !important;
         }
         .email-masthead_name {
           text-shadow: none !important;
@@ -397,7 +397,7 @@
       }
 
       :root {
-        color-scheme: light dark;
+        color-scheme: dark;
         supported-color-schemes: light dark;
       }
     </style>
@@ -418,7 +418,7 @@
             <!-- <tr>
               <td class="email-masthead">
                 <a href="{{base_url}}" class="f-fallback email-masthead_name">
-                  Cal.diy
+                  Calendar
                 </a>
               </td>
             </tr> -->
@@ -580,7 +580,7 @@
                     <td class="content-cell">
                       <div class="f-fallback">
                         <p>
-                          Click the button below to log in to Cal.diy<br />
+                          Click the button below to log in to Calendar<br />
                           This link will expire in 10 minutes.
                         </p>
                         <!-- Action -->
@@ -604,7 +604,7 @@
                                 <tr>
                                   <td>
                                     <a href="{{signin_url}}" class="f-fallback button" target="_blank"
-                                      >Log into Cal.diy</a
+                                      >Log into Calendar</a
                                     >
                                   </td>
                                 </tr>
@@ -613,7 +613,7 @@
                           </tr>
                         </table>
                         <p>Confirming this request will securely log you in using {{email}}.</p>
-                        <p>Enjoy your new scheduling solution by,<br />The Cal.diy Team</p>
+                        <p>Enjoy your new scheduling solution by,<br />The Calendar Team</p>
                         <!-- Sub copy -->
                         <table class="body-sub" role="presentation">
                           <tr>
@@ -643,7 +643,7 @@
                   role="presentation">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="f-fallback sub align-center">&copy; 2025 Cal.diy. All rights reserved.</p>
+                      <p class="f-fallback sub align-center">&copy; 2025 Calendar. All rights reserved.</p>
                     </td>
                   </tr>
                 </table>

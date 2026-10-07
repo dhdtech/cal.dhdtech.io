@@ -35,8 +35,8 @@ export const OrganisationAccountVerifyEmail = (
       <div style={{ display: "flex" }}>
         <div
           style={{
-            borderRadius: "6px",
-            backgroundColor: "#101010",
+            borderRadius: 0,
+            backgroundColor: "#e0e0e0",
             padding: "6px 2px 6px 8px",
             flexShrink: 1,
           }}>
@@ -52,7 +52,7 @@ export const OrganisationAccountVerifyEmail = (
             {props.language("happy_scheduling")} <br />
             <a
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
-              style={{ color: "#3E3E3E" }}
+              style={{ color: "#828a97" }}
               target="_blank"
               rel="noreferrer">
               <>{props.language("the_calcom_team", { companyName: COMPANY_NAME })}</>

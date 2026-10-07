@@ -5,9 +5,9 @@ export const BookingConfirmationForm = (props: { action: string; children: React
       <p
         style={{
           display: "inline-block",
-          background: "#FFFFFF",
+          background: "#101010",
           border: "",
-          color: "#ffffff",
+          color: "#101010",
           fontFamily: "Roboto, Helvetica, sans-serif",
           fontSize: "0.875rem",
           fontWeight: 500,
@@ -19,14 +19,14 @@ export const BookingConfirmationForm = (props: { action: string; children: React
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           msoPaddingAlt: "0px",
-          borderRadius: "6px",
+          borderRadius: 0,
           boxSizing: "border-box",
           height: "2.25rem",
           width: "100%",
         }}>
         <label
           style={{
-            color: "#3e3e3e",
+            color: "#828a97",
             fontFamily: "Roboto, Helvetica, sans-serif",
             fontSize: "0.875rem",
             fontWeight: 500,

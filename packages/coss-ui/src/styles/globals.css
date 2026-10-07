@@ -10,8 +10,8 @@
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -51,10 +51,10 @@
   --color-code: var(--code);
   --color-code-foreground: var(--code-foreground);
   --color-code-highlight: var(--code-highlight);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
   --animate-skeleton: skeleton 2s -1s infinite linear;
   @keyframes skeleton {
     to {
@@ -64,120 +64,53 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: var(--color-white);
-  --foreground: var(--color-neutral-800);
-  --card: var(--color-white);
-  --card-foreground: var(--color-neutral-800);
-  --popover: var(--color-white);
-  --popover-foreground: var(--color-neutral-800);
-  --primary: var(--color-neutral-800);
-  --primary-foreground: var(--color-neutral-50);
-  --secondary: --alpha(var(--color-black) / 4%);
-  --secondary-foreground: var(--color-neutral-800);
-  --muted: --alpha(var(--color-black) / 4%);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-500) 90%,
-    var(--color-black)
-  );
-  --accent: --alpha(var(--color-black) / 4%);
-  --accent-foreground: var(--color-neutral-800);
-  --destructive: var(--color-red-500);
-  --destructive-foreground: var(--color-red-700);
-  --info: var(--color-blue-500);
-  --info-foreground: var(--color-blue-700);
-  --success: var(--color-emerald-500);
-  --success-foreground: var(--color-emerald-700);
-  --warning: var(--color-amber-500);
-  --warning-foreground: var(--color-amber-700);
-  --border: --alpha(var(--color-black) / 8%);
-  --input: --alpha(var(--color-black) / 10%);
-  --ring: var(--color-neutral-400);
-  --chart-1: var(--color-orange-600);
-  --chart-2: var(--color-teal-600);
-  --chart-3: var(--color-cyan-900);
-  --chart-4: var(--color-amber-400);
-  --chart-5: var(--color-amber-500);
-  --sidebar: var(--color-neutral-50);
-  --sidebar-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-800) 64%,
-    var(--sidebar)
-  );
-  --sidebar-primary: var(--color-neutral-800);
-  --sidebar-primary-foreground: var(--color-neutral-50);
-  --sidebar-accent: --alpha(var(--color-black) / 4%);
-  --sidebar-accent-foreground: var(--color-neutral-800);
-  --sidebar-border: --alpha(var(--color-black) / 6%);
-  --sidebar-ring: var(--color-neutral-400);
-  --code: var(--color-white);
-  --code-foreground: var(--foreground);
-  --code-highlight: --alpha(var(--color-black) / 4%);
+  --radius: 0px;
+
+  --background: #0a0a0a;
+  --foreground: #e0e0e0;
+  --card: #101010;
+  --card-foreground: #e0e0e0;
+  --popover: #161616;
+  --popover-foreground: #e0e0e0;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.05);
+  --secondary-foreground: #e0e0e0;
+  --muted: rgba(255, 255, 255, 0.03);
+  --muted-foreground: #9ca3af;
+  --accent: rgba(99, 102, 241, 0.16);
+  --accent-foreground: #e0e0e0;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --info: #38bdf8;
+  --info-foreground: #ffffff;
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.10);
+  --ring: #6366f1;
+  --chart-1: #6366f1;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #38bdf8;
+  --chart-5: #ef4444;
+  --sidebar: #101010;
+  --sidebar-foreground: #e0e0e0;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.05);
+  --sidebar-accent-foreground: #e0e0e0;
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+  --sidebar-ring: #6366f1;
+  --code: #161616;
+  --code-foreground: #e0e0e0;
+  --code-highlight: rgba(255, 255, 255, 0.06);
 }
 
 .dark {
-  --background: color-mix(
-    in srgb,
-    var(--color-neutral-950) 96%,
-    var(--color-white)
-  );
-  --foreground: var(--color-neutral-100);
-  --card: color-mix(in srgb, var(--background) 98%, var(--color-white));
-  --card-foreground: var(--color-neutral-100);
-  --popover: color-mix(in srgb, var(--background) 96%, var(--color-white));
-  --popover-foreground: var(--color-neutral-100);
-  --primary: var(--color-neutral-100);
-  --primary-foreground: var(--color-neutral-800);
-  --secondary: --alpha(var(--color-white) / 4%);
-  --secondary-foreground: var(--color-neutral-100);
-  --muted: --alpha(var(--color-white) / 4%);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-500) 90%,
-    var(--color-white)
-  );
-  --accent: --alpha(var(--color-white) / 4%);
-  --accent-foreground: var(--color-neutral-100);
-  --destructive: color-mix(
-    in srgb,
-    var(--color-red-500) 90%,
-    var(--color-white)
-  );
-  --destructive-foreground: var(--color-red-400);
-  --info: var(--color-blue-500);
-  --info-foreground: var(--color-blue-400);
-  --success: var(--color-emerald-500);
-  --success-foreground: var(--color-emerald-400);
-  --warning: var(--color-amber-500);
-  --warning-foreground: var(--color-amber-400);
-  --border: --alpha(var(--color-white) / 6%);
-  --input: --alpha(var(--color-white) / 8%);
-  --ring: var(--color-neutral-500);
-  --chart-1: var(--color-blue-700);
-  --chart-2: var(--color-emerald-500);
-  --chart-3: var(--color-amber-500);
-  --chart-4: var(--color-purple-500);
-  --chart-5: var(--color-rose-500);
-  --sidebar: color-mix(
-    in srgb,
-    var(--color-neutral-950) 97%,
-    var(--color-white)
-  );
-  --sidebar-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-100) 64%,
-    var(--sidebar)
-  );
-  --sidebar-primary: var(--color-neutral-100);
-  --sidebar-primary-foreground: var(--color-neutral-800);
-  --sidebar-accent: --alpha(var(--color-white) / 4%);
-  --sidebar-accent-foreground: var(--color-neutral-100);
-  --sidebar-border: --alpha(var(--color-white) / 5%);
-  --sidebar-ring: var(--color-neutral-400);
-  --code: color-mix(in srgb, var(--background) 98%, var(--color-white));
-  --code-foreground: var(--foreground);
-  --code-highlight: --alpha(var(--color-white) / 4%);
+  color-scheme: dark;
 }
 
 @layer base {

@@ -35,17 +35,17 @@ export function LocationInfo(props: { calEvent: CalendarEvent; t: TFunction }) {
             href={meetingUrl}
             target="_blank"
             title={t("meeting_url")}
-            style={{ color: "#101010" }}
+            style={{ color: "#e0e0e0" }}
             rel="noreferrer">
             {providerName || "Link"}
           </a>
         }
         extraInfo={
           meetingUrl && (
-            <div style={{ color: "#494949", fontWeight: 400, lineHeight: "24px" }}>
+            <div style={{ color: "#828a97", fontWeight: 400, lineHeight: "24px" }}>
               <>
                 {t("meeting_url")}:{" "}
-                <a href={meetingUrl} title={t("meeting_url")} style={{ color: "#3E3E3E" }}>
+                <a href={meetingUrl} title={t("meeting_url")} style={{ color: "#828a97" }}>
                   {meetingUrl}
                 </a>
               </>
@@ -62,7 +62,7 @@ export function LocationInfo(props: { calEvent: CalendarEvent; t: TFunction }) {
         label={t("where")}
         withSpacer
         description={
-          <a href={`tel:${location}`} title="Phone" style={{ color: "#3E3E3E" }}>
+          <a href={`tel:${location}`} title="Phone" style={{ color: "#828a97" }}>
             {location}
           </a>
         }
@@ -77,7 +77,7 @@ export function LocationInfo(props: { calEvent: CalendarEvent; t: TFunction }) {
       description={providerName || location}
       extraInfo={
         (providerName === "Zoom" || providerName === "Google") && props.calEvent.requiresConfirmation ? (
-          <p style={{ color: "#494949", fontWeight: 400, lineHeight: "24px" }}>
+          <p style={{ color: "#828a97", fontWeight: 400, lineHeight: "24px" }}>
             <>{t("meeting_url_provided_after_confirmed")}</>
           </p>
         ) : null

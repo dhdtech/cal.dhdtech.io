@@ -45,9 +45,9 @@ export const OAuthClientApprovedNotificationEmail = ({
         style={{
           verticalAlign: "top",
           marginTop: "10px",
-          borderRadius: "6px",
+          borderRadius: 0,
           borderCollapse: "separate",
-          border: "solid #e5e7eb 1px",
+          border: "solid rgba(255,255,255,0.10) 1px",
         }}
         width="100%">
         <tbody>
@@ -55,13 +55,13 @@ export const OAuthClientApprovedNotificationEmail = ({
             <td
               style={{
                 padding: "12px",
-                borderBottom: "1px solid #e5e7eb",
+                borderBottom: "1px solid rgba(255,255,255,0.10)",
                 fontWeight: 600,
                 width: "30%",
               }}>
               {language("client_name")}
             </td>
-            <td style={{ padding: "12px", borderBottom: "1px solid #e5e7eb" }}>{clientName}</td>
+            <td style={{ padding: "12px", borderBottom: "1px solid rgba(255,255,255,0.10)" }}>{clientName}</td>
           </tr>
           <tr style={{ lineHeight: "24px" }}>
             <td

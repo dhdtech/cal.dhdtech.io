@@ -16,12 +16,12 @@ const EmailCommonDivider = ({
   return (
     <>
       <RawHtml
-        html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
+        html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#101010" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
       />
       <div
         style={{
-          background: "#FFFFFF",
-          backgroundColor: "#FFFFFF",
+          background: "#101010",
+          backgroundColor: "#101010",
           margin: "0px auto",
           maxWidth: 600,
         }}>
@@ -29,14 +29,14 @@ const EmailCommonDivider = ({
           align="center"
           border="0"
           style={{
-            background: "#FFFFFF",
-            backgroundColor: "#FFFFFF",
+            background: "#101010",
+            backgroundColor: "#101010",
             width: "100%",
           }}>
           <td
             style={{
-              borderLeft: "1px solid #E1E1E1",
-              borderRight: "1px solid #E1E1E1",
+              borderLeft: "1px solid rgba(255,255,255,0.10)",
+              borderRight: "1px solid rgba(255,255,255,0.10)",
               direction: "ltr",
               fontSize: 0,
               padding: "15px 0px 0 0px",

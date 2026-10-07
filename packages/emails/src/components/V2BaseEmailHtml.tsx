@@ -26,8 +26,8 @@ export const V2BaseEmailHtml = (props: {
   return (
     <Html>
       <EmailHead title={props.subject} />
-      <body style={{ wordSpacing: "normal", backgroundColor: "#F3F4F6" }}>
-        <div style={{ backgroundColor: "#F3F4F6" }}>
+      <body style={{ wordSpacing: "normal", backgroundColor: "#0a0a0a" }}>
+        <div style={{ backgroundColor: "#0a0a0a" }}>
           <RawHtml
             html={`<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
           />
@@ -52,7 +52,7 @@ export const V2BaseEmailHtml = (props: {
           {(props.headerType || props.title || props.subtitle) && <EmailSchedulingBodyDivider />}
 
           <RawHtml
-            html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" className="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
+            html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" className="" style="width:600px;" width="600" bgcolor="#101010" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
           />
           <div
             style={{
@@ -79,16 +79,16 @@ export const V2BaseEmailHtml = (props: {
                     display: "inline-block",
                     verticalAlign: "top",
                     width: "100%",
-                    border: "1px solid #E1E1E1",
-                    borderRadius: "6px",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    borderRadius: 0,
                   }}>
                   <Row
                     border="0"
                     style={{
                       verticalAlign: "top",
-                      borderRadius: "6px",
-                      background: "#FFFFFF",
-                      backgroundColor: "#FFFFFF",
+                      borderRadius: 0,
+                      background: "#101010",
+                      backgroundColor: "#101010",
                     }}
                     width="100%">
                     <td
@@ -106,7 +106,7 @@ export const V2BaseEmailHtml = (props: {
                           fontWeight: 500,
                           lineHeight: 1,
                           textAlign: "left",
-                          color: "#3E3E3E",
+                          color: "#828a97",
                         }}>
                         {props.children}
                       </div>
@@ -119,7 +119,7 @@ export const V2BaseEmailHtml = (props: {
           </div>
           {props.callToAction && <EmailSchedulingBodyDivider />}
           <RawHtml
-            html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" className="" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
+            html={`<!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" className="" style="width:600px;" width="600" bgcolor="#101010" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->`}
           />
 
           <div
@@ -169,7 +169,7 @@ export const V2BaseEmailHtml = (props: {
                                 fontSize: 13,
                                 lineHeight: 1,
                                 textAlign: "left",
-                                color: "#000000",
+                                color: "#e0e0e0",
                               }}
                             />
                           </td>
