@@ -16,6 +16,13 @@ const EmailHead = ({ title = "" }) => {
             padding: 0;
           }
 
+          /* Anchors get the DS accent-light. An email anchor carries no colour of its own,
+             so without this it falls through to the UA default blue. Underline is kept: it
+             is the affordance that survives every mail client. */
+          a {
+            color: #818cf8;
+          }
+
           body {
             margin: 0;
             padding: 0;
