@@ -221,6 +221,11 @@
 
 :root,
 :host {
+  /* The UA resolves the inherited `color: canvastext` against `color-scheme: dark`, which
+     lands every unstyled element on pure white. Pin the app's ink so the default is
+     #e0e0e0 and matches the token layer. */
+  color: var(--cal-text);
+
   /* Brutalist void — radius 0 across every corner scale. */
   --radius: 0px;
 
