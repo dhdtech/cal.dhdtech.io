@@ -71,8 +71,7 @@ class MyDocument extends Document<Props> {
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
           <meta name="msapplication-TileColor" content="#0a0a0a" />
-          <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0a0a0a" />
-          <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+          <meta name="theme-color" content="#0a0a0a" />
           {!IS_PRODUCTION && process.env.VERCEL_ENV === "preview" && (
             // eslint-disable-next-line @next/next/no-sync-scripts
             <script
