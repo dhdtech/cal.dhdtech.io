@@ -1,0 +1,7 @@
+# DHDTech.io Calendar
+
+> A free, self-hosted instance of Cal.diy — open-source scheduling software (MIT) — hosted by DHDTech.io.
+
+- [DHDTech.io Calendar](https://cal.dhdtech.io/about): What this instance is, who it is for, and how it is hosted.
+- [Cal.diy](https://github.com/calcom/cal.diy): The open-source scheduling project this instance runs, licensed MIT.
+- [Log in](https://cal.dhdtech.io/auth/login): Sign in to manage your availability, event types, and bookings.

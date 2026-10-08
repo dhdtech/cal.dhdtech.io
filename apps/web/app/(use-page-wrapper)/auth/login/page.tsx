@@ -11,13 +11,16 @@ import type { PageProps as ClientPageProps } from "~/auth/login-view";
 import Login from "~/auth/login-view";
 
 export const generateMetadata = async () => {
-  return await _generateMetadata(
-    (t) => t("login"),
-    (t) => t("login"),
-    undefined,
-    undefined,
-    "/auth/login"
-  );
+  return {
+    ...(await _generateMetadata(
+      () => "Log in to DHDTech.io Calendar",
+      () => "Log in to your DHDTech.io Calendar account to manage your availability, event types, and bookings.",
+      true,
+      undefined,
+      "/auth/login"
+    )),
+    robots: { index: false, follow: true },
+  };
 };
 
 const getData = withAppDirSsr<ClientPageProps>(getServerSideProps);

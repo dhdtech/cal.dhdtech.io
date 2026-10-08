@@ -1,10 +1,30 @@
 User-agent: *
+Allow: /
 Disallow: /sandbox
 Disallow: /api
 Disallow: /settings
 Disallow: /settings/my-account
 
-# Specifically allow access to OG Image api, otherwise eg Twitter won't render these images.
 Allow: /api/social/og/image
-# Specifically allow access to api/app-store to allow search engines to fetch assets
 Allow: /api/app-store/
+
+# AI answer engines and crawlers.
+# Allowed explicitly so the intent is declared here, not inherited from `*`.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://cal.dhdtech.io/sitemap.xml
+# llms.txt: https://cal.dhdtech.io/llms.txt

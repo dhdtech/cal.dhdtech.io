@@ -9,14 +9,10 @@ import { getServerSideProps } from "@lib/signup/getServerSideProps";
 import type { SignupProps } from "~/signup-view";
 import Signup from "~/signup-view";
 
-export const generateMetadata = async () =>
-  await _generateMetadata(
-    (t) => t("sign_up"),
-    (t) => t("sign_up"),
-    undefined,
-    undefined,
-    "/signup"
-  );
+export const generateMetadata = async () => ({
+  ...(await _generateMetadata((t) => t("sign_up"), (t) => t("sign_up"), undefined, undefined, "/signup")),
+  robots: { index: false, follow: true },
+});
 
 const getData = withAppDirSsr<SignupProps>(getServerSideProps);
 
