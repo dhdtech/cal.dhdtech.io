@@ -77,7 +77,7 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   other: {
-    "application-TileColor": "#ff0000",
+    "application-TileColor": "#0a0a0a",
   },
   twitter: {
     site: "@calcom",
