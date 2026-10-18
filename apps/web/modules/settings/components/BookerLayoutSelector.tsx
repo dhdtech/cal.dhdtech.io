@@ -243,8 +243,7 @@ const BookerLayoutFields = ({
               <Button
                 key="override-button"
                 onClick={onOverrideSettings}
-                color="minimal"
-                className="h-fit p-0 font-normal underline hover:bg-transparent focus-visible:bg-transparent">
+                color="secondary">
                 Override
               </Button>,
             ]}
