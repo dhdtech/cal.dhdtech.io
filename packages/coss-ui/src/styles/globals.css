@@ -119,6 +119,13 @@
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--cal-text);
+  caret-color: var(--cal-text);
+}
+
 .backdrop-blur-sm {
   @apply backdrop-blur-none bg-black/70;
 }
