@@ -336,7 +336,7 @@ export const FormBuilder = function FormBuilder({
                     </div>
                   </div>
                   <p className="text-subtle max-w-[280px] wrap-break-word pt-1 text-sm sm:max-w-[500px]">
-                    {fieldType.label}
+                    {t(field.name === "location" ? "field_type_location" : `field_type_${fieldType.value}`)}
                   </p>
                 </div>
                 {field.editable !== "user-readonly" && !disabled && (
@@ -635,7 +635,10 @@ function FieldEditDialog({
 
   const variantsConfig = fieldForm.watch("variantsConfig");
 
-  const fieldTypes = Object.values(fieldTypesConfigMap);
+  const fieldTypes = Object.values(fieldTypesConfigMap).map((fieldType) => ({
+    ...fieldType,
+    label: t(`field_type_${fieldType.value}`),
+  }));
 
   return (
     <Dialog open={dialog.isOpen} onOpenChange={onOpenChange} modal={false}>
@@ -667,7 +670,7 @@ function FieldEditDialog({
                 }
                 fieldForm.setValue("type", value, { shouldDirty: true });
               }}
-              value={fieldTypesConfigMap[formFieldType]}
+              value={fieldTypes.find((fieldType) => fieldType.value === formFieldType)}
               options={fieldTypes.filter((f) => !f.systemOnly)}
               label={t("input_type")}
             />
@@ -715,7 +718,7 @@ function FieldEditDialog({
                       <InputField
                         {...fieldForm.register("placeholder")}
                         containerClassName="mt-6"
-                        label={t("placeholder")}
+                        label={t("form_builder_placeholder")}
                         placeholder={t(fieldForm.getValues("defaultPlaceholder") || "")}
                       />
                     ) : null}
@@ -1055,7 +1058,7 @@ function VariantFields({
                 key={f.name}
                 value={f.placeholder || ""}
                 containerClassName="mt-6"
-                label={t("placeholder")}
+                label={t("form_builder_placeholder")}
                 placeholder={t(appUiFieldConfig?.defaultPlaceholder || "")}
               />
 
