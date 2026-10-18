@@ -221,12 +221,12 @@
 
 :root,
 :host {
-  /* The UA resolves the inherited `color: canvastext` against `color-scheme: dark`, which
-     lands every unstyled element on pure white. Pin the app's ink so the default is
-     #e0e0e0 and matches the token layer. */
+  /* The UA resolves `color: canvastext` against the active color-scheme, so pin
+     the app's ink to the token layer instead. */
   color: var(--cal-text);
+  color-scheme: light;
 
-  /* Brutalist void — radius 0 across every corner scale. */
+  /* Brutalist — radius 0 across every corner scale. */
   --radius: 0px;
 
   --radius-sm: 0px;
@@ -237,6 +237,138 @@
   --radius-3xl: 0px;
 
   --radius-none: 0px;
+
+  /* Background Standard */
+  --cal-bg-emphasis: #e7e5e4;
+  --cal-bg: #f5f5f4;
+  --cal-bg-subtle: #fafaf9;
+  --cal-bg-muted: #f0efed;
+  --cal-bg-inverted: #0a0a0a;
+
+  /* Background Primary */
+  --cal-bg-primary: #6366f1;
+  --cal-bg-primary-emphasis: #4f46e5;
+  --cal-bg-primary-muted: rgba(99, 102, 241, 0.16);
+
+  /* Background Brand */
+  --cal-bg-brand: #6366f1;
+  --cal-bg-brand-emphasis: #4f46e5;
+  --cal-bg-brand-muted: rgba(99, 102, 241, 0.16);
+
+  /* Background Semantic */
+  --cal-bg-semantic-info-subtle: #f1f7fe;
+  --cal-bg-semantic-info-emphasis: #0d1473;
+  --cal-bg-semantic-success-subtle: #e4f7f3;
+  --cal-bg-semantic-success-emphasis: #19a974;
+  --cal-bg-semantic-attention-subtle: #ffedd6;
+  --cal-bg-semantic-attention-emphasis: #9b3412;
+  --cal-bg-semantic-error-subtle: #fee1e1;
+  --cal-bg-semantic-error-emphasis: #641717;
+
+  /* Background Visualization */
+  --cal-bg-visualization-1-subtle: #fce8f4;
+  --cal-bg-visualization-1-emphasis: #ec4699;
+  --cal-bg-visualization-2-subtle: #dfd4fc;
+  --cal-bg-visualization-2-emphasis: #6634ef;
+  --cal-bg-visualization-3-subtle: #d4e3fc;
+  --cal-bg-visualization-3-emphasis: #4252ff;
+  --cal-bg-visualization-4-subtle: #e4f7f3;
+  --cal-bg-visualization-4-emphasis: #19a974;
+  --cal-bg-visualization-5-subtle: #fef9c3;
+  --cal-bg-visualization-5-emphasis: #e7b008;
+  --cal-bg-visualization-6-subtle: #ffedd6;
+  --cal-bg-visualization-6-emphasis: #f97415;
+  --cal-bg-visualization-7-subtle: #fec8c8;
+  --cal-bg-visualization-7-emphasis: #ef4343;
+
+  /* Legacy Background Components */
+  --cal-bg-info: #dde7fd;
+  --cal-bg-success: #e4fbed;
+  --cal-bg-attention: #ffedd6;
+  --cal-bg-error: #f9e3e1;
+  --cal-bg-dark-error: #772522;
+  --cal-bg-launch-dark: #0d0c27;
+
+  /* Borders */
+  --cal-border-emphasis: rgba(10, 10, 10, 0.24);
+  --cal-border: rgba(10, 10, 10, 0.16);
+  --cal-border-subtle: rgba(10, 10, 10, 0.10);
+  --cal-border-muted: rgba(10, 10, 10, 0.10);
+  --cal-border-error: rgba(239, 68, 68, 0.35);
+  --cal-border-semantic-error: rgba(239, 68, 68, 0.35);
+  --cal-border-semantic-attention-subtle: rgba(245, 158, 11, 0.35);
+  --cal-border-semantic-error-subtle: rgba(239, 68, 68, 0.35);
+  --cal-border-booker: var(--cal-border-subtle);
+
+  /* Content/Text Standard */
+  --cal-text-emphasis: #0a0a0a;
+  --cal-text: #0a0a0a;
+  --cal-text-subtle: #57534e;
+  --cal-text-muted: #78716c;
+  --cal-text-inverted: #ffffff;
+
+  /* Content/Text Semantic */
+  --cal-text-semantic-info: #0d1473;
+  --cal-text-semantic-success: #096738;
+  --cal-text-semantic-attention: #9b3412;
+  --cal-text-semantic-error: #641717;
+
+  /* Content/Text Visualization */
+  --cal-text-visualization-1: #720d3c;
+  --cal-text-visualization-2: #40067a;
+  --cal-text-visualization-3: #06327a;
+  --cal-text-visualization-4: #126d34;
+  --cal-text-visualization-5: #7b5d04;
+  --cal-text-visualization-6: #7c3403;
+  --cal-text-visualization-7: #750a0a;
+
+  /* Legacy Content/Text Components */
+  --cal-text-info: #243c84;
+  --cal-text-success: #285239;
+  --cal-text-attention: #74331b;
+  --cal-text-error: #811d1d;
+
+  /* Brand */
+  --cal-brand: #6366f1;
+  --cal-brand-emphasis: #4f46e5;
+  --cal-brand-text: #ffffff;
+
+  /* Box Shadows — brutalist hard offset on the elevated surfaces. */
+  --shadow-dropdown: 4px 4px 0 0 rgba(99, 102, 241, 0.35);
+  --shadow-switch-thumb: 0px 0.8px 0.8px 0px rgba(0, 0, 0, 0.10), 0px 0.8px 3.2px 0px rgba(0, 0, 0, 0.08);
+  --shadow-solid-gray-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.16) inset, 0px -1.5px 2px 0px rgba(0, 0, 0, 0.40) inset;
+  --shadow-solid-gray-hover: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.16) inset, 0px -2px 2px 0px rgba(0, 0, 0, 0.40) inset;
+  --shadow-solid-gray-active: 0px 2px 3px 0px rgba(0, 0, 0, 0.40) inset, 0px 0px 2px 1px rgba(0, 0, 0, 0.40) inset;
+  --shadow-outline-gray-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-outline-gray-hover: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-outline-gray-active: 0px 2px 1px 0px rgba(0, 0, 0, 0.05) inset;
+  --shadow-outline-gray-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.20), 0px 0px 0px 2px rgba(0, 0, 0, 0.10);
+  --shadow-outline-red-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-outline-red-hover: 0px 1px 1px 0px rgba(0, 0, 0, 0.06), 0px 2px 3px 0px rgba(0, 0, 0, 0.08);
+  --shadow-outline-red-active: 0px 1px 1px 0px rgba(127, 29, 29, 0.06), 0px 0px 3px 0px rgba(127, 29, 29, 0.08), 0px 2px 2px 1px rgba(127, 29, 29, 0.06) inset;
+  --shadow-elevation-low: 4px 4px 0 0 rgba(99, 102, 241, 0.35);
+  --shadow-button-solid-brand-default: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.12) inset, 0px -3px 2px 0px rgba(0, 0, 0, 0.04) inset;
+  --shadow-button-solid-brand-hover: 0px 1px 1px 0px rgba(0, 0, 0, 0.10), 0px 2px 3px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px -3px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 2px 0.4px 0px rgba(255, 255, 255, 0.24) inset;
+  --shadow-button-solid-brand-active: 0px 3px 1px 0px rgba(0, 0, 0, 0.10) inset, 0px 0px 2px 0px rgba(0, 0, 0, 0.10) inset;
+  --shadow-button-solid-brand-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.40), 0px 0px 0px 2px rgba(0, 0, 0, 0.20), 0px 1px 1px 0px rgba(0, 0, 0, 0.10), 0px 2px 3px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px -3px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 2px 0.4px 0px rgba(255, 255, 255, 0.24) inset;
+  --shadow-button-outline-red-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.32), 0px 0px 0px 2px rgba(220, 38, 38, 0.15);
+
+  /* Fill Colors */
+  --fill-emphasis: var(--cal-text-emphasis, #111827);
+  --fill-default: var(--cal-text, #374151);
+  --fill-subtle: var(--cal-text-subtle, #6B7280);
+  --fill-muted: var(--cal-text-muted, #9CA3AF);
+  --fill-inverted: var(--cal-text-inverted, white);
+  --fill-info: var(--cal-text-info, #253985);
+  --fill-success: var(--cal-text-success, #285231);
+  --fill-attention: var(--cal-text-attention, #73321B);
+  --fill-error: var(--cal-text-error, #752522);
+  --fill-brand: var(--cal-brand-text);
+}
+
+/* Void palette for the dark scheme. */
+.dark {
+  color-scheme: dark;
 
   /* Background Standard */
   --cal-bg-emphasis: rgba(255, 255, 255, 0.10);
@@ -332,42 +464,4 @@
   --cal-brand: #6366f1;
   --cal-brand-emphasis: #4f46e5;
   --cal-brand-text: #ffffff;
-
-  /* Box Shadows — brutalist hard offset on the elevated surfaces. */
-  --shadow-dropdown: 4px 4px 0 0 rgba(99, 102, 241, 0.35);
-  --shadow-switch-thumb: 0px 0.8px 0.8px 0px rgba(0, 0, 0, 0.10), 0px 0.8px 3.2px 0px rgba(0, 0, 0, 0.08);
-  --shadow-solid-gray-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.16) inset, 0px -1.5px 2px 0px rgba(0, 0, 0, 0.40) inset;
-  --shadow-solid-gray-hover: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.16) inset, 0px -2px 2px 0px rgba(0, 0, 0, 0.40) inset;
-  --shadow-solid-gray-active: 0px 2px 3px 0px rgba(0, 0, 0, 0.40) inset, 0px 0px 2px 1px rgba(0, 0, 0, 0.40) inset;
-  --shadow-outline-gray-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
-  --shadow-outline-gray-hover: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
-  --shadow-outline-gray-active: 0px 2px 1px 0px rgba(0, 0, 0, 0.05) inset;
-  --shadow-outline-gray-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.20), 0px 0px 0px 2px rgba(0, 0, 0, 0.10);
-  --shadow-outline-red-rested: 0px 2px 3px 0px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.03);
-  --shadow-outline-red-hover: 0px 1px 1px 0px rgba(0, 0, 0, 0.06), 0px 2px 3px 0px rgba(0, 0, 0, 0.08);
-  --shadow-outline-red-active: 0px 1px 1px 0px rgba(127, 29, 29, 0.06), 0px 0px 3px 0px rgba(127, 29, 29, 0.08), 0px 2px 2px 1px rgba(127, 29, 29, 0.06) inset;
-  --shadow-elevation-low: 4px 4px 0 0 rgba(99, 102, 241, 0.35);
-  --shadow-button-solid-brand-default: 0px 2px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 1px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 0.4px 0px rgba(255, 255, 255, 0.12) inset, 0px -3px 2px 0px rgba(0, 0, 0, 0.04) inset;
-  --shadow-button-solid-brand-hover: 0px 1px 1px 0px rgba(0, 0, 0, 0.10), 0px 2px 3px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px -3px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 2px 0.4px 0px rgba(255, 255, 255, 0.24) inset;
-  --shadow-button-solid-brand-active: 0px 3px 1px 0px rgba(0, 0, 0, 0.10) inset, 0px 0px 2px 0px rgba(0, 0, 0, 0.10) inset;
-  --shadow-button-solid-brand-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.40), 0px 0px 0px 2px rgba(0, 0, 0, 0.20), 0px 1px 1px 0px rgba(0, 0, 0, 0.10), 0px 2px 3px 0px rgba(0, 0, 0, 0.08), 1px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px -3px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 2px 0.4px 0px rgba(255, 255, 255, 0.24) inset;
-  --shadow-button-outline-red-focused: 0px 0px 0px 1px rgba(255, 255, 255, 0.32), 0px 0px 0px 2px rgba(220, 38, 38, 0.15);
-
-  /* Fill Colors */
-  --fill-emphasis: var(--cal-text-emphasis, #111827);
-  --fill-default: var(--cal-text, #374151);
-  --fill-subtle: var(--cal-text-subtle, #6B7280);
-  --fill-muted: var(--cal-text-muted, #9CA3AF);
-  --fill-inverted: var(--cal-text-inverted, white);
-  --fill-info: var(--cal-text-info, #253985);
-  --fill-success: var(--cal-text-success, #285231);
-  --fill-attention: var(--cal-text-attention, #73321B);
-  --fill-error: var(--cal-text-error, #752522);
-  --fill-brand: var(--cal-brand-text);
-}
-
-/* The app is dark in both schemes, so `.dark` only has to pin the native
-   color-scheme — every token above is already the void palette. */
-.dark {
-  color-scheme: dark;
 }
