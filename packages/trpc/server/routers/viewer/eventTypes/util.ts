@@ -1,4 +1,5 @@
 import type { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
 import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
 import prisma from "@calcom/prisma";
@@ -14,9 +15,15 @@ import type { TUpdateInputSchema } from "./types";
 type PermissionString = string;
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type EventType = Awaited<ReturnType<EventTypeRepository["findAllByUpId"]>>[number];
@@ -62,6 +69,8 @@ export const eventOwnerProcedure = authedProcedure
       throw new TRPCError({ code: "NOT_FOUND" });
     }
 
+    const effectiveUserId = await getEffectiveUserId(ctx.user.id, ctx.prisma);
+
     const isAuthorized = (() => {
       if (event.team) {
         const teamMember = event.team.members.find((member) => member.userId === ctx.user.id);
@@ -69,7 +78,11 @@ export const eventOwnerProcedure = authedProcedure
 
         return isOwnerOrAdmin;
       }
-      return event.userId === ctx.user.id || event.users.find((user) => user.id === ctx.user.id);
+      return (
+        event.userId === ctx.user.id ||
+        event.userId === effectiveUserId ||
+        !!event.users.find((user) => user.id === ctx.user.id)
+      );
     })();
 
     if (!isAuthorized) {
@@ -81,7 +94,7 @@ export const eventOwnerProcedure = authedProcedure
         const allTeamMembers = event.team.members.map((member) => member.userId);
         return input.users.every((userId: number) => allTeamMembers.includes(userId));
       }
-      return input.users.every((userId: number) => userId === ctx.user.id);
+      return input.users.every((userId: number) => userId === ctx.user.id || userId === effectiveUserId);
     })();
 
     if (!isAllowed) {
@@ -147,10 +160,16 @@ export const createEventPbacProcedure = (
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
+      const effectiveUserId = await getEffectiveUserId(ctx.user.id, ctx.prisma);
+
       // Check if user has permission to access/modify this event
       if (!event.teamId) {
         // Personal event - must be owner or assigned user
-        if (event.userId !== ctx.user.id && !event.users.find((user) => user.id === ctx.user.id)) {
+        if (
+          event.userId !== ctx.user.id &&
+          event.userId !== effectiveUserId &&
+          !event.users.find((user) => user.id === ctx.user.id)
+        ) {
           throw new TRPCError({
             code: "FORBIDDEN",
             message: `Permission required: ${permission}`,
@@ -181,7 +200,10 @@ export const createEventPbacProcedure = (
             const allTeamMembers = event.team.members.map((member) => member.userId);
             return input.users?.every((userId: number) => allTeamMembers.includes(userId)) ?? true;
           }
-          return input.users?.every((userId: number) => userId === ctx.user.id) ?? true;
+          return (
+            input.users?.every((userId: number) => userId === ctx.user.id || userId === effectiveUserId) ??
+            true
+          );
         })();
 
         if (!isAllowed) {

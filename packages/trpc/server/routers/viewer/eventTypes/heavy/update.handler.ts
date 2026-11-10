@@ -7,6 +7,7 @@ import { HashedLinkService } from "@calcom/features/hashedLink/lib/service/Hashe
 import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
 import { ScheduleRepository } from "@calcom/features/schedules/repositories/ScheduleRepository";
 import tasker from "@calcom/features/tasker";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import { getTranslation } from "@calcom/i18n/server";
 import { validateIntervalLimitOrder } from "@calcom/lib/intervalLimits/validateIntervalLimitOrder";
 import logger from "@calcom/lib/logger";
@@ -94,6 +95,9 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
     enablePerHostLocations,
     ...rest
   } = input;
+
+  const effectiveOwnerId = await getEffectiveUserId(ctx.user.id, ctx.prisma);
+  const isWorkspaceMember = effectiveOwnerId !== ctx.user.id;
 
   const eventType = await ctx.prisma.eventType.findUniqueOrThrow({
     where: { id },
@@ -319,10 +323,10 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
   }
 
   if (schedule) {
-    // Check that the schedule belongs to the user
+    // Check that the schedule belongs to the team owner
     const userScheduleQuery = await ctx.prisma.schedule.findFirst({
       where: {
-        userId: ctx.user.id,
+        userId: effectiveOwnerId,
         id: schedule,
       },
     });
@@ -362,7 +366,7 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
       scheduleId: restrictionScheduleId,
     });
     // If the user doesn't own the schedule, check if they're a team member
-    if (restrictionSchedule?.userId !== ctx.user.id) {
+    if (restrictionSchedule?.userId !== effectiveOwnerId) {
       if (!teamId || !restrictionSchedule) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
@@ -392,10 +396,12 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
     };
   }
 
-  if (users?.length) {
+  // Members always operate on the owner's event type, so they cannot assign it to themselves.
+  const usersToConnect = isWorkspaceMember && users?.length ? [effectiveOwnerId] : users;
+  if (usersToConnect?.length) {
     data.users = {
       set: [],
-      connect: users.map((userId: number) => ({ id: userId })),
+      connect: usersToConnect.map((userId: number) => ({ id: userId })),
     };
   }
 

@@ -1,5 +1,6 @@
 import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
 import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
 import type { PrismaClient } from "@calcom/prisma";
 import { MembershipRole } from "@calcom/prisma/enums";
@@ -13,9 +14,15 @@ import { EventTypeGroupFilter } from "./utils/EventTypeGroupFilter";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type GetByViewerOptions = {
@@ -33,10 +40,11 @@ export const getUserEventGroups = async ({ ctx, input }: GetByViewerOptions) => 
   });
 
   const user = ctx.user;
-  const userProfile = user.profile;
+  const effectiveOwnerId = await getEffectiveUserId(user.id, ctx.prisma);
+  const effectiveUpId = `usr-${effectiveOwnerId}`;
 
   // Validate profile exists and user has access
-  const profile = await ProfileRepository.findByUpIdWithAuth(userProfile.upId, user.id);
+  const profile = await ProfileRepository.findByUpIdWithAuth(effectiveUpId, effectiveOwnerId);
   if (!profile) {
     throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
   }
@@ -51,8 +59,8 @@ export const getUserEventGroups = async ({ ctx, input }: GetByViewerOptions) => 
   // Build event groups
   const eventGroupBuilder = new EventGroupBuilder(dependencies);
   const { eventTypeGroups, teamPermissionsMap } = await eventGroupBuilder.buildEventGroups({
-    userId: user.id,
-    userUpId: userProfile.upId,
+    userId: effectiveOwnerId,
+    userUpId: effectiveUpId,
     filters: input?.filters,
   });
 

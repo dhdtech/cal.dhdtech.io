@@ -1,11 +1,10 @@
-import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
-import { generateHashedLink } from "@calcom/lib/generateHashedLink";
 import { CalVideoSettingsRepository } from "@calcom/features/calVideoSettings/repositories/CalVideoSettingsRepository";
+import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
+import { generateHashedLink } from "@calcom/lib/generateHashedLink";
 import { prisma } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
-
 import { TRPCError } from "@trpc/server";
-
 import type { TrpcSessionUser } from "../../../../types";
 import { setDestinationCalendarHandler } from "../../../viewer/calendars/setDestinationCalendar.handler";
 import type { TDuplicateInputSchema } from "./duplicate.schema";
@@ -70,8 +69,10 @@ export const duplicateHandler = async ({ ctx, input }: DuplicateOptions) => {
       throw new TRPCError({ code: "NOT_FOUND" });
     }
 
-    // Validate user is owner of event type or in the team
-    if (eventType.userId !== ctx.user.id) {
+    const effectiveOwnerId = await getEffectiveUserId(ctx.user.id);
+
+    // Validate user owns the event type, is its effective owner, or is in the team
+    if (eventType.userId !== ctx.user.id && eventType.userId !== effectiveOwnerId) {
       if (eventType.teamId) {
         const isMember = await prisma.membership.findUnique({
           where: {
@@ -223,14 +224,13 @@ export const duplicateHandler = async ({ ctx, input }: DuplicateOptions) => {
     };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
-      
       if (Array.isArray(error.meta?.target) && error.meta?.target.includes("slug")) {
         throw new TRPCError({
           code: "CONFLICT",
           message: "duplicate_event_slug_conflict",
         });
       }
-      
+
       throw new TRPCError({
         code: "CONFLICT",
         message: "Unique constraint violation while creating a duplicate event.",

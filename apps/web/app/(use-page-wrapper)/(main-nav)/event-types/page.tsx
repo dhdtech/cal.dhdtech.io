@@ -11,7 +11,6 @@ import { unstable_cache } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
-
 import { EventTypesWrapper } from "./EventTypesWrapper";
 
 const getCachedEventGroups: (
@@ -39,7 +38,11 @@ const getCachedEventGroups: (
     return await eventTypesCaller.getUserEventGroups({ filters });
   },
   ["viewer.eventTypes.getUserEventGroups"],
-  { revalidate: 3600 } // seconds
+  {
+    revalidate: 3600, // seconds
+    // Membership changes must drop the cached groups for every team member.
+    tags: ["viewer.eventTypes.getUserEventGroups"],
+  }
 );
 
 const Page = async ({ searchParams }: PageProps): Promise<ReactElement> => {

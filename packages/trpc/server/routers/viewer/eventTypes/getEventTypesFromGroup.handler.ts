@@ -1,5 +1,6 @@
 import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
 import { hasFilter } from "@calcom/features/filters/lib/hasFilter";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
 import logger from "@calcom/lib/logger";
 import type { PrismaClient } from "@calcom/prisma";
@@ -35,12 +36,13 @@ export const getEventTypesFromGroup = async ({
     rateLimitingType: "common",
   });
 
-  const userProfile = ctx.user.profile;
+  const effectiveOwnerId = await getEffectiveUserId(ctx.user.id, ctx.prisma);
+  const effectiveUpId = `usr-${effectiveOwnerId}`;
   const { group, limit, cursor, filters, searchQuery } = input;
   const { teamId, parentId } = group;
 
   const isFilterSet = (filters && hasFilter(filters)) || !!teamId;
-  const isUpIdInFilter = filters?.upIds?.includes(userProfile.upId);
+  const isUpIdInFilter = filters?.upIds?.includes(effectiveUpId);
 
   const shouldListUserEvents =
     !isFilterSet || isUpIdInFilter || (isFilterSet && filters?.upIds && !isUpIdInFilter);
@@ -58,8 +60,8 @@ export const getEventTypesFromGroup = async ({
     const [nonChildEventTypes, childEventTypes] = await Promise.all([
       eventTypeRepo.findAllByUpId(
         {
-          upId: userProfile.upId,
-          userId: ctx.user.id,
+          upId: effectiveUpId,
+          userId: effectiveOwnerId,
         },
         {
           where: {
@@ -80,8 +82,8 @@ export const getEventTypesFromGroup = async ({
       ),
       eventTypeRepo.findAllByUpId(
         {
-          upId: userProfile.upId,
-          userId: ctx.user.id,
+          upId: effectiveUpId,
+          userId: effectiveOwnerId,
         },
         {
           where: {

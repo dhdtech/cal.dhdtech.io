@@ -1,3 +1,4 @@
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
 import type { PrismaClient } from "@calcom/prisma";
 import { MembershipRole } from "@calcom/prisma/enums";
@@ -5,9 +6,15 @@ import { BookingRepository } from "../repositories/BookingRepository";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type BookingForAccessCheck = NonNullable<Awaited<ReturnType<BookingRepository["findByUidIncludeEventType"]>>>;
@@ -76,6 +83,10 @@ export class BookingAccessService {
 
     // Case 1: User is the booking organizer
     if (userId === booking.userId) return true;
+
+    // Case 1b: User manages the booking organizer's account through a workspace
+    if (booking.userId && (await getEffectiveUserId(userId, this.prismaClient)) === booking.userId)
+      return true;
 
     // Case 2: User is one of the hosts
     if (this.isUserAHost(userId, booking)) return true;

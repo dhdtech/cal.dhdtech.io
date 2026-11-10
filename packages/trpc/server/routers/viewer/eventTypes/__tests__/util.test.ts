@@ -10,6 +10,9 @@ describe("createEventPbacProcedure", () => {
     eventType: {
       findUnique: vi.fn(),
     },
+    membership: {
+      findMany: vi.fn().mockResolvedValue([]),
+    },
   } as unknown as PrismaClient;
 
   const mockCtx = {

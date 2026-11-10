@@ -10,6 +10,7 @@ export async function findTokenByToken({ token }: { token: string }) {
     },
     select: {
       id: true,
+      identifier: true,
       expires: true,
       teamId: true,
     },

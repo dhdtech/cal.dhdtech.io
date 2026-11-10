@@ -74,7 +74,9 @@ describe("getUserEventGroups", () => {
 
   const mockCtx = {
     user: mockUser,
-    prisma: {} as PrismaClient,
+    prisma: {
+      membership: { findMany: vi.fn().mockResolvedValue([]) },
+    } as unknown as PrismaClient,
   };
 
   beforeEach(() => {

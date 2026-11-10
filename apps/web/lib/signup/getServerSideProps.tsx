@@ -154,7 +154,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       return {
         redirect: {
           permanent: false,
-          destination: `/auth/login?callbackUrl=${WEBAPP_URL}/${ctx.query.callbackUrl}`,
+          destination: `/auth/login?callbackUrl=${encodeURIComponent(
+            `/settings/team/accept?token=${token}`
+          )}`,
         },
       };
     }

@@ -1,6 +1,7 @@
 import { getDefaultLocations } from "@calcom/app-store/_utils/getDefaultLocations";
 import { DailyLocationType } from "@calcom/app-store/constants";
 import { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import type { PrismaClient } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
 import { MembershipRole, SchedulingType } from "@calcom/prisma/enums";
@@ -12,9 +13,15 @@ import type { TCreateInputSchema } from "./create.schema";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type EventTypeLocation = z.infer<typeof eventTypeLocations>[number];
@@ -54,6 +61,7 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
   } = input;
 
   const userId = ctx.user.id;
+  const effectiveOwnerId = await getEffectiveUserId(userId, ctx.prisma);
   const isManagedEventType = schedulingType === SchedulingType.MANAGED;
   const isOrgAdmin = !!ctx.user?.organization?.isOrgAdmin;
 
@@ -75,14 +83,22 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
 
   const isCalVideoLocationActive = locations.some((location) => location.type === DailyLocationType);
 
+  // Workspace members may only attach schedules that belong to the owner.
+  const scheduleOwnedByEffectiveUser = scheduleId
+    ? await ctx.prisma.schedule.findFirst({
+        where: { id: scheduleId, userId: effectiveOwnerId },
+        select: { id: true },
+      })
+    : null;
+
   const data: Prisma.EventTypeCreateInput = {
     ...rest,
-    owner: teamId ? undefined : { connect: { id: userId } },
+    owner: teamId ? undefined : { connect: { id: effectiveOwnerId } },
     metadata: (metadata as Prisma.InputJsonObject) ?? undefined,
-    // Only connecting the current user for non-managed event types and non team event types
-    users: isManagedEventType || schedulingType ? undefined : { connect: { id: userId } },
+    // Only connecting the owner for non-managed event types and non team event types
+    users: isManagedEventType || schedulingType ? undefined : { connect: { id: effectiveOwnerId } },
     locations,
-    schedule: scheduleId ? { connect: { id: scheduleId } } : undefined,
+    schedule: scheduleOwnedByEffectiveUser ? { connect: { id: scheduleOwnedByEffectiveUser.id } } : undefined,
   };
 
   if (isCalVideoLocationActive && calVideoSettings) {
@@ -147,12 +163,15 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
     }
   }
 
-  const profile = ctx.user.profile;
+  const effectiveOwnerProfile = await ctx.prisma.profile.findFirst({
+    where: { userId: effectiveOwnerId },
+    select: { id: true },
+  });
   try {
     const eventTypeRepo = new EventTypeRepository(ctx.prisma);
     const eventType = await eventTypeRepo.create({
       ...data,
-      profileId: profile.id,
+      profileId: effectiveOwnerProfile?.id ?? null,
     });
     return { eventType };
   } catch (e) {

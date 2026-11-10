@@ -1,10 +1,8 @@
-import { default as cloneDeep } from "lodash/cloneDeep";
-import type { z } from "zod";
-
 import dayjs from "@calcom/dayjs";
 import type BaseEmail from "@calcom/emails/templates/_base-email";
 import type { EventNameObjectType } from "@calcom/features/eventtypes/lib/eventNaming";
 import { getEventName } from "@calcom/features/eventtypes/lib/eventNaming";
+import { getTranslation } from "@calcom/i18n/server";
 import { formatCalEvent } from "@calcom/lib/formatCalendarEvent";
 import logger from "@calcom/lib/logger";
 import { safeStringify } from "@calcom/lib/safeStringify";
@@ -12,7 +10,8 @@ import { withReporting } from "@calcom/lib/sentryWrapper";
 import { prisma } from "@calcom/prisma";
 import type { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
-
+import { default as cloneDeep } from "lodash/cloneDeep";
+import type { z } from "zod";
 import AwaitingPaymentSMS from "../sms/attendee/awaiting-payment-sms";
 import CancelledSeatSMS from "../sms/attendee/cancelled-seat-sms";
 import EventCancelledSMS from "../sms/attendee/event-cancelled-sms";
@@ -44,6 +43,7 @@ import OrganizerRequestReminderEmail from "./templates/organizer-request-reminde
 import OrganizerRequestedToRescheduleEmail from "./templates/organizer-requested-to-reschedule-email";
 import OrganizerRescheduledEmail from "./templates/organizer-rescheduled-email";
 import OrganizerScheduledEmail from "./templates/organizer-scheduled-email";
+import TeamInviteEmail from "./templates/team-invite-email";
 
 type EventTypeMetadata = z.infer<typeof EventTypeMetaDataSchema>;
 
@@ -738,3 +738,31 @@ export const sendAddGuestsEmailsAndSMS = async (args: {
 
   await Promise.all(emailsAndSMSToSend);
 };
+
+export async function sendTeamInviteEmail(args: {
+  to: string;
+  from: string;
+  teamName: string;
+  joinLink: string;
+  isRegistered: boolean;
+  locale?: string;
+}) {
+  const language = await getTranslation(args.locale ?? "en", "common");
+  await sendEmail(
+    () =>
+      new TeamInviteEmail({
+        language,
+        from: args.from,
+        to: args.to,
+        teamName: args.teamName,
+        joinLink: args.joinLink,
+        isCalcomMember: args.isRegistered,
+        isAutoJoin: false,
+        isOrg: false,
+        parentTeamName: undefined,
+        isExistingUserMovedToOrg: false,
+        prevLink: null,
+        newLink: null,
+      })
+  );
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import process from "node:process";
 import getStripe from "@calcom/app-store/stripepayment/lib/client";
 import { getPremiumPlanPriceValue } from "@calcom/app-store/stripepayment/lib/utils";
 import {
@@ -261,7 +262,7 @@ export default function Signup({
       if (!result.ok) {
         if (isUserAlreadyExistsError(result)) {
           showToast(t("account_already_exists_please_login"), "warning");
-          const callbackUrl = token ? `/teams?token=${token}` : "/event-types";
+          const callbackUrl = token ? `/settings/team/accept?token=${token}` : "/event-types";
           setTimeout(() => {
             router.push(`/auth/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
           }, 3000);
@@ -511,15 +512,8 @@ export default function Signup({
                           setPremium={(value) => setPremiumUsername(value)}
                           addOnLeading={
                             orgSlug
-                              ? truncateDomain(
-                                  `${WEBAPP_URL.replace(
-                                    URL_PROTOCOL_REGEX,
-                                    ""
-                                  )}/`
-                                )
-                              : truncateDomain(
-                                  `${WEBSITE_URL.replace(URL_PROTOCOL_REGEX, "")}/`
-                                )
+                              ? truncateDomain(`${WEBAPP_URL.replace(URL_PROTOCOL_REGEX, "")}/`)
+                              : truncateDomain(`${WEBSITE_URL.replace(URL_PROTOCOL_REGEX, "")}/`)
                           }
                         />
                       ) : null}

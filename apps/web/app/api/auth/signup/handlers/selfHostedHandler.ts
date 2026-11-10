@@ -10,23 +10,21 @@ import {
   validateAndGetCorrectedUsernameForTeam,
 } from "@calcom/features/auth/signup/utils/token";
 import { validateAndGetCorrectedUsernameAndEmail } from "@calcom/features/auth/signup/utils/validateUsername";
+import { getUserRepository } from "@calcom/features/di/containers/UserRepository";
 import { hashPassword } from "@calcom/lib/auth/hashPassword";
-
 import logger from "@calcom/lib/logger";
 import { isPrismaError } from "@calcom/lib/server/getServerErrorFromUnknown";
 import { isUsernameReservedDueToMigration } from "@calcom/lib/server/username";
 import slugify from "@calcom/lib/slugify";
 import { prisma } from "@calcom/prisma";
-import { IdentityProvider } from "@calcom/prisma/enums";
+import { CreationSource, IdentityProvider } from "@calcom/prisma/enums";
 import { signupSchema } from "@calcom/prisma/zod-utils";
 import { NextResponse } from "next/server";
-import { getUserRepository } from "@calcom/features/di/containers/UserRepository";
-import { CreationSource } from "@calcom/prisma/enums";
 
 export default async function handler(body: Record<string, string>) {
   const { email, password, language, token } = signupSchema.parse(body);
 
-  const userRepository = getUserRepository()
+  const userRepository = getUserRepository();
 
   const username = slugify(body.username);
   const userEmail = email.toLowerCase();
@@ -35,11 +33,21 @@ export default async function handler(body: Record<string, string>) {
     return NextResponse.json({ message: "Invalid username" }, { status: 422 });
   }
 
-  let foundToken: { id: number; teamId: number | null; expires: Date } | null = null;
+  let foundToken: { id: number; identifier: string; teamId: number | null; expires: Date } | null = null;
   let correctedUsername = username;
   if (token) {
     foundToken = await findTokenByToken({ token });
     throwIfTokenExpired(foundToken?.expires);
+    if (
+      foundToken?.teamId &&
+      foundToken.identifier?.includes("@") &&
+      foundToken.identifier.toLowerCase() !== userEmail
+    ) {
+      return NextResponse.json(
+        { message: "This invite was sent to a different email address" },
+        { status: 403 }
+      );
+    }
     correctedUsername = await validateAndGetCorrectedUsernameForTeam({
       username,
       email: userEmail,
@@ -49,8 +57,8 @@ export default async function handler(body: Record<string, string>) {
 
     if (foundToken?.teamId) {
       const existingUser = await userRepository.findByEmailWithInvitedTo({
-        email: userEmail
-      })
+        email: userEmail,
+      });
 
       if (existingUser && existingUser.invitedTo !== foundToken.teamId) {
         return NextResponse.json({ message: SIGNUP_ERROR_CODES.USER_ALREADY_EXISTS }, { status: 409 });
@@ -107,8 +115,8 @@ export default async function handler(body: Record<string, string>) {
       const existingUserByUsername = await userRepository.findByUsernameAndOrganizationId({
         username: correctedUsername,
         organizationId,
-        excludeEmail: userEmail
-      })
+        excludeEmail: userEmail,
+      });
 
       if (existingUserByUsername) {
         return NextResponse.json({ message: SIGNUP_ERROR_CODES.USER_ALREADY_EXISTS }, { status: 409 });
@@ -122,8 +130,8 @@ export default async function handler(body: Record<string, string>) {
           hashedPassword,
           organizationId,
           emailVerified: new Date(Date.now()),
-          identityProvider: IdentityProvider.CAL
-        })
+          identityProvider: IdentityProvider.CAL,
+        });
       } catch (error) {
         if (isPrismaError(error) && error.code === "P2002") {
           const target = String(error.meta?.target ?? "");
@@ -167,8 +175,8 @@ export default async function handler(body: Record<string, string>) {
         organizationId: null,
         creationSource: CreationSource.WEBAPP,
         identityProvider: IdentityProvider.CAL,
-        locked: false
-      })
+        locked: false,
+      });
     } catch (error) {
       // Fallback for race conditions where user was created between our check and create
       if (isPrismaError(error) && error.code === "P2002") {

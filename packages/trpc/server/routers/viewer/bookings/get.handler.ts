@@ -1,6 +1,7 @@
 import dayjs from "@calcom/dayjs";
 import getAllUserBookings from "@calcom/features/bookings/lib/getAllUserBookings";
 import { isTextFilterValue } from "@calcom/features/data-table/lib/utils";
+import { getEffectiveUserId } from "@calcom/features/teams/lib/workspace";
 import type { DB } from "@calcom/kysely";
 import kysely from "@calcom/kysely";
 import { parseEventTypeColor } from "@calcom/lib/isEventTypeColor";
@@ -20,9 +21,15 @@ import type { TGetInputSchema } from "./get.schema";
 
 class PermissionCheckService {
   constructor(_prisma?: unknown) {}
-  async checkPermission(..._args: unknown[]) { return true; }
-  async hasPermission(..._args: unknown[]) { return true; }
-  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> { return []; }
+  async checkPermission(..._args: unknown[]) {
+    return true;
+  }
+  async hasPermission(..._args: unknown[]) {
+    return true;
+  }
+  async getTeamIdsWithPermission(..._args: unknown[]): Promise<number[]> {
+    return [];
+  }
 }
 
 type GetOptions = {
@@ -116,6 +123,7 @@ export async function getBookings({
 }) {
   const permissionCheckService = new PermissionCheckService();
   const fallbackRoles: MembershipRole[] = [MembershipRole.ADMIN, MembershipRole.OWNER];
+  const effectiveOwnerId = await getEffectiveUserId(user.id, prisma);
 
   const teamIdsWithBookingPermission = await permissionCheckService.getTeamIdsWithPermission({
     userId: user.id,
@@ -151,7 +159,9 @@ export async function getBookings({
       allAccessibleUserIds.includes(userId)
     );
 
-    const isCurrentUser = filters.userIds.length === 1 && user.id === filters.userIds[0];
+    const isCurrentUser =
+      filters.userIds.length === 1 &&
+      (user.id === filters.userIds[0] || effectiveOwnerId === filters.userIds[0]);
 
     //  Scope depends on `user.orgId`:
     // - Throw an error if trying to filter by usersIds that are not within your ORG
@@ -218,7 +228,7 @@ export async function getBookings({
         .select("Booking.endTime")
         .select("Booking.createdAt")
         .select("Booking.updatedAt")
-        .where("Booking.userId", "=", user.id),
+        .where("Booking.userId", "in", [user.id, effectiveOwnerId]),
       tables: ["Booking"],
     });
     // 2. Current user is an attendee
@@ -667,7 +677,7 @@ export async function getBookings({
         recurringEventId: {
           not: { equals: null },
         },
-        userId: user.id,
+        userId: { in: [user.id, effectiveOwnerId] },
       },
     }),
     prisma.booking.groupBy({
@@ -679,7 +689,7 @@ export async function getBookings({
         recurringEventId: {
           not: { equals: null },
         },
-        userId: user.id,
+        userId: { in: [user.id, effectiveOwnerId] },
       },
     }),
   ]);
